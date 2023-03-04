@@ -21,49 +21,53 @@ const context = canvas.getContext('2d');
 let currentSize = 10;
 let bucketColor = '#FFFFFF';
 let currentColor = '#A51DAB';
-// let isEraser = false;
+let isEraser = false;
 // let isMouseDown = false;
 // let drawnArray = [];
 
 // Formatting Brush Size
-// function displayBrushSize() {
+function displayBrushSize() {
 
-// }
+}
 
 // Setting Brush Size
-// brushSlider.addEventListener('change', () => {
-
-// });
+brushSlider.addEventListener('change', () => {
+   currentSize = brushSlider.value;
+});
 
 // Setting Brush Color
-// brushColorBtn.addEventListener('change', () => {
+brushColorBtn.addEventListener('change', () => {
+   isEraser = false;
+   currentColor = `#${brushColorBtn.value}`;
+});
 
-// });
-
-// Setting Background Color
-// bucketColorBtn.addEventListener('change', () => {
-
-// });
+//Setting Background Color
+bucketColorBtn.addEventListener('change', () => {
+    bucketColor =`#${bucketColorBtn.value}`;
+    createCanvas();
+});
 
 // // Eraser
-// eraser.addEventListener('click', () => {
+eraser.addEventListener('click', () => {
+  isEraser = true;
+  brushIcon.style.color = 'white';
+  eraser.style.color = 'black';
+  activeToolEl.textContent = 'Eraser';
+  currentColor =  bucketColor;
+  currentSize = 50;
 
-//   brushIcon.style.color = 'white';
-//   eraser.style.color = 'black';
-//   activeToolEl.textContent = 'Eraser';
+});
 
-// });
+// Switch back to Brush
+function switchToBrush() {
+  isEraser = false;
+  activeToolEl.textContent = 'Brush';
+  brushIcon.style.color = 'black';
+  eraser.style.color = 'white';
+  currentColor = `#${brushColorBtn.value}`;
+  currentSize = 10;
 
-// // Switch back to Brush
-// function switchToBrush() {
-//   isEraser = false;
-//   activeToolEl.textContent = 'Brush';
-//   brushIcon.style.color = 'black';
-//   eraser.style.color = 'white';
-//   currentColor = `#${brushColorBtn.value}`;
-//   currentSize = 10;
-
-// }
+}
 
 // Create Canvas
 function createCanvas() {
@@ -72,6 +76,7 @@ function createCanvas() {
   context.fillStyle = bucketColor ;
   context.fillRect(0, 0, canvas.width, canvas.height);
   body.appendChild(canvas);
+  switchToBrush();
 
 }
 
@@ -196,8 +201,8 @@ canvas.addEventListener('mouseup', () => {
 //   setTimeout(switchToBrush, 1500);
 // });
 
-// // Event Listener
-// brushIcon.addEventListener('click', switchToBrush);
+// Event Listener
+brushIcon.addEventListener('click', switchToBrush);
 
 // On Load
 createCanvas();
